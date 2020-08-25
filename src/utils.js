@@ -1,20 +1,21 @@
 const safe = Symbol("safe");
 
-exports.safe = (str) => ({ [safe]: str });
+exports.safe = (str) => ({ [safe]: str, toString: () => str });
 
-exports.dedent = (strings, ...interpolations) =>
-  interpolate(strings, interpolations)
-    .split("\n")
-    .slice(1, -1)
-    .map((l) => l.slice(2))
-    .join("\n");
-
-function interpolate(strings, interpolations) {
+exports.html = (strings, ...interpolations) => {
   let result = strings[0];
   for (let i = 0; i < interpolations.length; i++) {
-    const value = interpolations[i];
-    result += value[safe] ?? value;
+    const raw = interpolations[i];
+    result += Array.isArray(raw) ? raw.map(unwrap).join("") : unwrap(raw);
     result += strings[i + 1];
   }
-  return result;
-}
+  return exports.safe(result);
+};
+
+const unwrap = (raw) => {
+  if (raw == null) throw new Error("Invalid null or undefined value");
+  return raw[safe] ?? encode(raw);
+};
+
+const encode = (s) =>
+  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");

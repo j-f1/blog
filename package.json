@@ -1,13 +1,16 @@
 {
   "private": true,
   "scripts": {
-    "build": "node scripts/build.js"
+    "build": "node scripts/build.js",
+    "watch": "watch --interval 1 'npm run -s build' src posts scripts static",
+    "serve": "serve public",
+    "start": "npm run -s watch & npm run -s serve"
   },
   "devDependencies": {
     "@types/node": "^14.6.0",
     "prettier": "^2.1.0"
   },
   "dependencies": {
-    "nodemon": "^2.0.4"
+    "watch": "^1.0.2"
   }
 }

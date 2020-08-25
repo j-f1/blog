@@ -1,0 +1,17 @@
+ul.posts {
+  list-style-type: none;
+  padding: 0;
+}
+ul.posts li .date {
+  float: right;
+  opacity: 0.5;
+  font-family: var(--system-fonts);
+  font-weight: 500;
+}
+
+@media (max-width: 400px) {
+  ul.posts li .date {
+    float: none;
+    display: block;
+  }
+}
