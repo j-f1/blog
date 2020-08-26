@@ -51,8 +51,8 @@ async function copyStatic() {
 
 function fetchPosts() {
   return readdir(postsDir, (file, name) => ({
-    slug: path.basename(name, "md"),
     ...parsePost(fs.readFileSync(file, "utf8")),
+    slug: path.basename(name, ".md"),
   }));
 }
 
