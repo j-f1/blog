@@ -1,4 +1,6 @@
-console.log(`Building at ${new Date().toLocaleTimeString()} ...`);
+const chalk = require("chalk");
+const start = Date.now();
+console.log(`Building at ${chalk.bold(new Date().toLocaleTimeString())}...`);
 
 const fs = require("fs/promises");
 const { existsSync } = require("fs");
@@ -80,4 +82,14 @@ function fetchPosts() {
       )
     ),
   ]);
-})();
+})().then(
+  () =>
+    console.log(
+      chalk.green`Built sucessfully in {bold ${Date.now() - start}ms}\n`
+    ),
+  (err) => {
+    const [first, ...rest] = err.stack.split("\n");
+    console.error(chalk.bold.red(first));
+    console.error(chalk.gray(rest.join("\n")) + "\n");
+  }
+);
