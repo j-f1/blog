@@ -8,6 +8,7 @@ module.exports = (post) =>
         &larr; Home
       </a>
       <h1>${post.title}</h1>
+      <p class="post-date">${post.date.toDateString()}</p>
       <article>${safe(post.content_html)}</article>
     `,
   });

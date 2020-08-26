@@ -15,6 +15,6 @@ module.exports = (posts) =>
 function renderPost(post) {
   return html`<li>
     <a href="/posts/${post.slug}">${post.title}</a>
-    <span class="date">${post.date.toDateString()}</span>
+    <span class="post-date">${post.date.toDateString()}</span>
   </li>`;
 }
