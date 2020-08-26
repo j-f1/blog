@@ -2,15 +2,16 @@ const layout = require("../layout");
 const { html } = require("../utils");
 
 module.exports = (posts) =>
-  layout({
-    content: html`
+  layout(
+    null,
+    html`
       <h1>Jed Fox’s Blog</h1>
 
       <ul class="posts">
         ${posts.map(renderPost)}
       </ul>
-    `,
-  });
+    `
+  );
 
 function renderPost(post) {
   return html`<li>

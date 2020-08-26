@@ -1,7 +1,7 @@
 const { html, safe } = require("./utils");
 
-module.exports = ({ title, content }) =>
-  html`
+module.exports = (title, content) => {
+  return html`
     <!DOCTYPE html>
     <html lang="en" dir="ltr">
       <head>
@@ -52,3 +52,4 @@ module.exports = ({ title, content }) =>
       </body>
     </html>
   `.toString();
+};
