@@ -5,7 +5,7 @@ ul.posts {
 
 .post-date {
   opacity: 0.5;
-  font-family: var(--system-fonts);
+  font-family: var(--system);
   font-weight: 600;
 }
 ul.posts li .post-date {
@@ -23,13 +23,22 @@ ul.posts li .post-date {
   background: transparent;
 }
 
+.post-title {
+  font-family: ui-rounded, var(--system);
+  font-weight: bold;
+}
+
 h1 + .post-date {
   margin-top: -1em;
 }
 
 .home-link {
-  font-family: var(--system-fonts);
+  font-family: var(--system);
   font-weight: bold;
+}
+
+article h1 {
+  font-family: var(--system);
 }
 
 .heading-link {

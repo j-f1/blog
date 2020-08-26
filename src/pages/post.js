@@ -7,7 +7,7 @@ module.exports = (post) =>
       <p>
         <a href="/" class="home-link"> &larr; Home </a>
       </p>
-      <h1>${post.title}</h1>
+      <h1 class="post-title">${post.title}</h1>
       <p class="post-date">${post.date.toDateString()}</p>
       <article>${safe(post.content_html)}</article>
     `,
