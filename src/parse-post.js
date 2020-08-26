@@ -1,8 +1,9 @@
 const remark = require("remark");
 const remarkHTML = require("remark-html");
 const slug = require("remark-slug");
+const highlight = require("remark-highlight.js");
 
-const md = remark().use(slug).use(remarkHTML);
+const md = remark().use(slug).use(highlight).use(remarkHTML);
 
 const lineRe = /(?<key>[^:]+): (?<value>.+)/;
 

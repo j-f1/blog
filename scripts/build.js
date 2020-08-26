@@ -44,9 +44,20 @@ async function resetOutput() {
 }
 
 async function copyStatic() {
-  await readdir(staticDir, (src, name) =>
-    fs.copyFile(src, path.join(outputDir, name))
-  );
+  const hljsPath = path.join(root, "node_modules", "highlight.js", "styles");
+  await Promise.all([
+    readdir(staticDir, (src, name) =>
+      fs.copyFile(src, path.join(outputDir, name))
+    ),
+    fs.copyFile(
+      path.join(hljsPath, "atom-one-light.css"),
+      path.join(outputDir, "atom-one-light.css")
+    ),
+    fs.copyFile(
+      path.join(hljsPath, "atom-one-dark.css"),
+      path.join(outputDir, "atom-one-dark.css")
+    ),
+  ]);
 }
 
 function fetchPosts() {

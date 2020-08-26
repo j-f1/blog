@@ -8,6 +8,16 @@ module.exports = ({ title, content }) =>
         <meta charset="utf-8" />
         <title>${title ? title + " | " : ""}Jed Fox’s Blog</title>
         <meta name="viewport" content="width=device-width" />
+        <link
+          rel="stylesheet"
+          href="/atom-one-light.css"
+          media="(prefers-color-scheme: light)"
+        />
+        <link
+          rel="stylesheet"
+          href="/atom-one-dark.css"
+          media="(prefers-color-scheme: dark)"
+        />
         <link rel="stylesheet" href="https://jedfox.com/styles.css" />
         <link rel="stylesheet" href="/styles.css" />
         <link
