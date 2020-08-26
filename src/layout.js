@@ -20,6 +20,8 @@ module.exports = ({ title, content }) =>
         />
         <link rel="stylesheet" href="https://jedfox.com/styles.css" />
         <link rel="stylesheet" href="/styles.css" />
+        <link rel="alternate" type="application/json" href="/feed.json" />
+        <link rel="alternate" type="application/feed+json" href="/feed.json" />
         <link
           rel="icon"
           type="image/png"

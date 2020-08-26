@@ -71,6 +71,7 @@ function fetchPosts() {
   const [posts] = await Promise.all([fetchPosts(), resetOutput()]);
   await Promise.all([
     copyStatic(),
+    writeFile("feed.json", JSON.stringify(require("../src/feed")(posts))),
     writeFile("index.html", require("../src/pages/home")(posts)),
     ...posts.map((post) =>
       writeFile(
