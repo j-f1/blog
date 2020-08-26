@@ -1,5 +1,5 @@
 const layout = require("../layout");
-const { html } = require("../utils");
+const { html, safe } = require("../utils");
 
 module.exports = (post) =>
   layout({
@@ -8,6 +8,6 @@ module.exports = (post) =>
         &larr; Home
       </a>
       <h1>${post.title}</h1>
-      <article>${post.body}</article>
+      <article>${safe(post.content_html)}</article>
     `,
   });

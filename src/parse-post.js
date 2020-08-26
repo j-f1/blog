@@ -1,6 +1,13 @@
+const remark = require("remark");
+const remarkHTML = require("remark-html");
+const slug = require("remark-slug");
+
+const md = remark().use(slug).use(remarkHTML);
+
 const lineRe = /(?<key>[^:]+): (?<value>.+)/;
 
-module.exports = (content) => {
+/** @param {string} content */
+module.exports = async (content) => {
   const lines = content.split("\n");
   if (lines[0] !== "---") throw new Error("Invalid file " + content);
 
@@ -17,7 +24,7 @@ module.exports = (content) => {
     .join("\n")
     .slice(0, -1);
 
-  return { ...meta, body };
+  return { ...meta, content_html: String(await md.process(body)) };
 };
 
 const keys = {
