@@ -71,10 +71,11 @@ function fetchPosts() {
 
 (async () => {
   const [posts] = await Promise.all([fetchPosts(), resetOutput()]);
+  const publicPosts = posts.filter((p) => !p.unlisted);
   await Promise.all([
     copyStatic(),
     writeFile("feed.json", JSON.stringify(require("../src/feed")(posts))),
-    writeFile("index.html", require("../src/pages/home")(posts)),
+    writeFile("index.html", require("../src/pages/home")(publicPosts)),
     ...posts.map((post) =>
       writeFile(
         "posts/" + post.slug + ".html",

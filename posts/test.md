@@ -1,6 +1,7 @@
 ---
 title: Test Post
 date: 2020-08-25
+unlisted: true
 ---
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.

@@ -41,4 +41,5 @@ module.exports = async (content) => {
 const keys = {
   date: (val) => new Date(val),
   title: String,
+  unlisted: (val) => val === "true",
 };
