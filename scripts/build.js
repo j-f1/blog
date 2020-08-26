@@ -1,6 +1,6 @@
 console.log(`Building at ${new Date().toLocaleTimeString()} ...`);
 
-const fs = require("fs");
+const fs = require("fs/promises");
 const path = require("path");
 
 const parsePost = require("../src/parse-post");
@@ -10,38 +10,61 @@ const outputDir = path.join(root, "public");
 const postsDir = path.join(root, "posts");
 const staticDir = path.join(root, "static");
 
-function recursivelyRemove(dir) {
-  for (const name of fs.readdirSync(dir)) {
-    const file = path.join(dir, name);
-    if (fs.statSync(file).isDirectory()) {
-      recursivelyRemove(file);
-    } else {
-      fs.unlinkSync(file);
-    }
-  }
-  fs.rmdirSync(dir);
+function readdir(dir, cb) {
+  return fs
+    .readdir(dir)
+    .then((files) =>
+      Promise.all(files.map((name) => cb(path.join(dir, name), name)))
+    );
 }
 
-if (fs.existsSync(outputDir)) recursivelyRemove(outputDir);
-fs.mkdirSync(outputDir);
-
-for (const name of fs.readdirSync(staticDir)) {
-  fs.copyFileSync(path.join(staticDir, name), path.join(outputDir, name));
+async function recursivelyRemove(dir) {
+  await readdir(dir, (file) =>
+    fs
+      .stat(file)
+      .then((s) =>
+        s.isDirectory() ? recursivelyRemove(file) : fs.unlink(file)
+      )
+  );
+  await fs.rmdir(dir);
 }
 
-const writeFile = (name, content) => {
+async function writeFile(name, content) {
   const absPath = path.join(outputDir, name);
-  if (!fs.existsSync(path.dirname(absPath)))
-    fs.mkdirSync(path.dirname(absPath), { recursive: true });
-  fs.writeFileSync(absPath, content);
-};
-const posts = fs.readdirSync(postsDir).map((name) => ({
-  slug: name.slice(0, -3),
-  ...parsePost(fs.readFileSync(path.join(postsDir, name), "utf8")),
-}));
-
-writeFile("index.html", require("../src/pages/home")(posts));
-
-for (const post of posts) {
-  writeFile("posts/" + post.slug + ".html", require("../src/pages/post")(post));
+  if (!(await fs.exists(path.dirname(absPath)))) {
+    await fs.mkdir(path.dirname(absPath), { recursive: true });
+  }
+  await fs.writeFile(absPath, content);
 }
+
+async function resetOutput() {
+  if (await fs.exists(outputDir)) await recursivelyRemove(outputDir);
+  await fs.mkdir(outputDir);
+}
+
+async function copyStatic() {
+  await readdir(staticDir, (src, name) =>
+    fs.copyFile(src, path.join(outputDir, name))
+  );
+}
+
+function fetchPosts() {
+  return readdir(postsDir, (file, name) => ({
+    slug: path.basename(name, "md"),
+    ...parsePost(fs.readFileSync(file, "utf8")),
+  }));
+}
+
+(async () => {
+  const [posts] = await Promise.all([fetchPosts(), resetOutput()]);
+  await Promise.all([
+    copyStatic(),
+    writeFile("index.html", require("../src/pages/home")(posts)),
+    ...posts.map((post) =>
+      writeFile(
+        "posts/" + post.slug + ".html",
+        require("../src/pages/post")(post)
+      )
+    ),
+  ]);
+})();
