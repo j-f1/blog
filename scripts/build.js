@@ -1,6 +1,7 @@
 console.log(`Building at ${new Date().toLocaleTimeString()} ...`);
 
 const fs = require("fs/promises");
+const { existsSync } = require("fs");
 const path = require("path");
 
 const parsePost = require("../src/parse-post");
@@ -31,14 +32,14 @@ async function recursivelyRemove(dir) {
 
 async function writeFile(name, content) {
   const absPath = path.join(outputDir, name);
-  if (!(await fs.exists(path.dirname(absPath)))) {
+  if (!existsSync(path.dirname(absPath))) {
     await fs.mkdir(path.dirname(absPath), { recursive: true });
   }
   await fs.writeFile(absPath, content);
 }
 
 async function resetOutput() {
-  if (await fs.exists(outputDir)) await recursivelyRemove(outputDir);
+  if (existsSync(outputDir)) await recursivelyRemove(outputDir);
   await fs.mkdir(outputDir);
 }
 
