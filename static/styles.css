@@ -26,3 +26,8 @@ ul.posts li .post-date {
 h1 + .post-date {
   margin-top: -1em;
 }
+
+.home-link {
+  font-family: var(--system-fonts);
+  font-weight: bold;
+}

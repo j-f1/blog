@@ -4,9 +4,9 @@ const { html, safe } = require("../utils");
 module.exports = (post) =>
   layout({
     content: html`
-      <a href="/" style="font-family: var(--system-fonts); font-weight: bold;">
-        &larr; Home
-      </a>
+      <p>
+        <a href="/" class="home-link"> &larr; Home </a>
+      </p>
       <h1>${post.title}</h1>
       <p class="post-date">${post.date.toDateString()}</p>
       <article>${safe(post.content_html)}</article>
