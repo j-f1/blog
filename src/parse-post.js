@@ -24,7 +24,9 @@ module.exports = async (content) => {
   let i = 1;
   while (lines[i] !== "---") {
     const [, key, value] = lineRe.exec(lines[i]);
-    meta[key] = keys[key]?.(value) ?? value;
+    const handler = keys[key];
+    if (!handler) throw new TypeError(`Invalid key ${key}`);
+    meta[key] = handler(value);
     i++;
   }
 
@@ -37,5 +39,6 @@ module.exports = async (content) => {
 };
 
 const keys = {
-  date: (str) => new Date(str),
+  date: (val) => new Date(val),
+  title: String,
 };
