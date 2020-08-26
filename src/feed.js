@@ -6,11 +6,11 @@ module.exports = (posts) => ({
   icon: "https://jedfox.com/favicon-192.png",
   author: { name: "Jed Fox", url: "https://jedfox.com" },
   authors: [{ name: "Jed Fox", url: "https://jedfox.com" }],
-  items: [
-    posts.map((post) => ({
-      ...post,
-      id: "https://blog.jedfox.com/posts/" + post.slug,
-      url: "https://blog.jedfox.com/posts/" + post.slug,
-    })),
-  ],
+  language: "en-us",
+  items: posts.map((post) => ({
+    ...post,
+    id: "https://blog.jedfox.com/posts/" + post.slug,
+    url: "https://blog.jedfox.com/posts/" + post.slug,
+    slug: undefined,
+  })),
 });
