@@ -48,7 +48,20 @@ module.exports = (title, content) => {
         />
       </head>
       <body>
-        <main>${safe(content)}</main>
+        <main>
+          ${safe(content)}
+          <footer>
+            &copy;
+            2020${new Date().getFullYear() > 2020
+              ? "&ndash;" + new Date().getFullYear()
+              : ""}
+            Jed Fox. All rights reserved. Written in HTML and CSS using a
+            hand-coded static site generator,
+            <a href="https://remark.js.org">remark</a>, and
+            <a href="https://highlightjs.org">highlight.js</a>. View
+            <a href="https://github.com/j-f1/blog">the source</a> on GitHub.
+          </footer>
+        </main>
       </body>
     </html>
   `.toString();
