@@ -31,3 +31,14 @@ h1 + .post-date {
   font-family: var(--system-fonts);
   font-weight: bold;
 }
+
+.heading-link {
+  text-decoration: none;
+  float: right;
+  opacity: 0.25;
+  color: inherit;
+}
+:target .heading-link {
+  opacity: 0.75;
+  color: goldenrod;
+}

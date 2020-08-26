@@ -2,8 +2,17 @@ const remark = require("remark");
 const remarkHTML = require("remark-html");
 const slug = require("remark-slug");
 const highlight = require("remark-highlight.js");
+const headings = require("remark-autolink-headings");
 
-const md = remark().use(slug).use(highlight).use(remarkHTML);
+const md = remark()
+  .use(slug)
+  .use(headings, {
+    content: { type: "text", value: "#" },
+    behavior: "append",
+    linkProperties: { ariaHidden: true, tabIndex: -1, class: "heading-link" },
+  })
+  .use(highlight)
+  .use(remarkHTML);
 
 const lineRe = /(?<key>[^:]+): (?<value>.+)/;
 
