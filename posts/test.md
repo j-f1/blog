@@ -1,6 +1,6 @@
 # 2020-08-25: Test Post
 
-[unlisted]
+{unlisted}
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 

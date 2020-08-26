@@ -15,7 +15,7 @@ const md = remark()
   .use(remarkHTML);
 
 const titleRe = /^# (?<date>\d{4}-\d{2}-\d{2}): (?<title>.+)$/;
-const metaRe = /\[([^\]]+)\]\s+/g;
+const metaRe = /\{([^\]]+)\}\s+/g;
 
 module.exports = async (content) => {
   const lines = content.split("\n");
@@ -27,7 +27,7 @@ module.exports = async (content) => {
   } = titleRe.exec(lines[0]);
 
   let meta;
-  if (lines[2][0] === "[") {
+  if (lines[2][0] === "{") {
     meta = {};
     for (const [, token] of (lines[2] + " ").matchAll(metaRe)) {
       if (token === "unlisted") {
