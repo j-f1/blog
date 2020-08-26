@@ -13,11 +13,19 @@ const outputDir = path.join(root, "public");
 const postsDir = path.join(root, "posts");
 const staticDir = path.join(root, "static");
 
-function readdir(dir, cb) {
+function readdir(dir, ext, cb) {
+  if (!cb) {
+    cb = ext;
+    ext = null;
+  }
   return fs
     .readdir(dir)
     .then((files) =>
-      Promise.all(files.map((name) => cb(path.join(dir, name), name)))
+      Promise.all(
+        files
+          .filter((name) => !ext || name.endsWith(ext))
+          .map((name) => cb(path.join(dir, name), name))
+      )
     );
 }
 
@@ -63,7 +71,7 @@ async function copyStatic() {
 }
 
 function fetchPosts() {
-  return readdir(postsDir, async (file, name) => ({
+  return readdir(postsDir, ".md", async (file, name) => ({
     ...(await parsePost(await fs.readFile(file, "utf8"))),
     slug: path.basename(name, ".md"),
   }));
@@ -89,8 +97,8 @@ function fetchPosts() {
       chalk.green`Built sucessfully in {bold ${Date.now() - start}ms}\n`
     ),
   (err) => {
-    const [first, ...rest] = err.stack.split("\n");
-    console.error(chalk.bold.red(first));
-    console.error(chalk.gray(rest.join("\n")) + "\n");
+    const message = `${err.name}: ${err.message}`;
+    console.error(chalk.bold.red(message));
+    console.error(chalk.gray(err.stack.replace(message + "\n", "")) + "\n");
   }
 );
