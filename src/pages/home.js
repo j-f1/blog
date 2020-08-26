@@ -7,6 +7,11 @@ module.exports = (posts) =>
     html`
       <h1>Jed Fox’s Blog</h1>
 
+      <p style="font-family: var(--system)">
+        Looking for my website? It’s over at
+        <a href="https://jedfox.com">jedfox.com</a>.
+      </p>
+
       <ul class="posts">
         ${posts.map(renderPost)}
       </ul>
