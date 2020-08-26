@@ -16,7 +16,6 @@ const md = remark()
 
 const lineRe = /(?<key>[^:]+): (?<value>.+)/;
 
-/** @param {string} content */
 module.exports = async (content) => {
   const lines = content.split("\n");
   if (lines[0] !== "---") throw new Error("Invalid file " + content);
