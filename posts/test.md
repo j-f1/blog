@@ -1,8 +1,6 @@
----
-title: Test Post
-date: 2020-08-25
-unlisted: true
----
+# 2020-08-25: Test Post
+
+[unlisted]
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
