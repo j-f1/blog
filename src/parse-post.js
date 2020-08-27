@@ -41,7 +41,7 @@ module.exports = async (content) => {
   }
 
   const body = lines
-    .slice(meta ? 2 : 4)
+    .slice(meta ? 4 : 2)
     .join("\n")
     .slice(0, -1);
 
