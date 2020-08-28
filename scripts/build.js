@@ -97,7 +97,9 @@ function fetchPosts() {
   () => console.log(chalk.green`Done in {bold ${Date.now() - start}ms}`),
   (err) => {
     process.stdout.write(chalk.red`Failed in {bold ${Date.now() - start}ms}\n`);
-    console.error(chalk`${err.name}: {bold.bgRed  ${err.message} }`);
+    console.error(
+      chalk`${err.name}: {bold.whiteBright.bgRedBright  ${err.message} }`
+    );
     console.error(
       chalk.gray(err.stack.replace(`${err.name}: ${err.message}` + "\n", "")) +
         "\n"
