@@ -1,6 +1,8 @@
 const chalk = require("chalk");
 const start = Date.now();
-console.log(`Building at ${chalk.bold(new Date().toLocaleTimeString())}...`);
+process.stdout.write(
+  `Building at ${chalk.bold(new Date().toLocaleTimeString())}... `
+);
 
 const fs = require("fs/promises");
 const { existsSync } = require("fs");
@@ -92,13 +94,13 @@ function fetchPosts() {
     ),
   ]);
 })().then(
-  () =>
-    console.log(
-      chalk.green`Built sucessfully in {bold ${Date.now() - start}ms}\n`
-    ),
+  () => console.log(chalk.green`Done in {bold ${Date.now() - start}ms}`),
   (err) => {
-    const message = `${err.name}: ${err.message}`;
-    console.error(chalk.bold.red(message));
-    console.error(chalk.gray(err.stack.replace(message + "\n", "")) + "\n");
+    process.stdout.write(chalk.red`Failed in {bold ${Date.now() - start}ms}\n`);
+    console.error(chalk`${err.name}: {bold.bgRed  ${err.message} }`);
+    console.error(
+      chalk.gray(err.stack.replace(`${err.name}: ${err.message}` + "\n", "")) +
+        "\n"
+    );
   }
 );
