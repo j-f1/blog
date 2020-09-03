@@ -31,15 +31,16 @@ function readdir(dir, ext, cb) {
     );
 }
 
-async function recursivelyRemove(dir) {
+async function recursivelyRun(dir, onFile, onDir) {
+  if (onDir.before) await onDir.before(dir);
   await readdir(dir, (file) =>
     fs
       .stat(file)
       .then((s) =>
-        s.isDirectory() ? recursivelyRemove(file) : fs.unlink(file)
+        s.isDirectory() ? recursivelyRun(file, onFile, onDir) : onFile(file)
       )
   );
-  await fs.rmdir(dir);
+  if (onDir.after) await onDir.after(dir);
 }
 
 async function writeFile(name, content) {
@@ -51,15 +52,23 @@ async function writeFile(name, content) {
 }
 
 async function resetOutput() {
-  if (existsSync(outputDir)) await recursivelyRemove(outputDir);
-  await fs.mkdir(outputDir);
+  if (existsSync(outputDir))
+    await recursivelyRun(outputDir, fs.unlink, { after: fs.rmdir });
 }
 
 async function copyStatic() {
   const hljsPath = path.join(root, "node_modules", "highlight.js", "styles");
   await Promise.all([
-    readdir(staticDir, (src, name) =>
-      fs.copyFile(src, path.join(outputDir, name))
+    recursivelyRun(
+      staticDir,
+      (src) =>
+        fs.copyFile(src, path.join(outputDir, path.relative(staticDir, src))),
+      {
+        before: (src) =>
+          path.relative(staticDir, src) == "posts"
+            ? null
+            : fs.mkdir(path.join(outputDir, path.relative(staticDir, src))),
+      }
     ),
     fs.copyFile(
       path.join(hljsPath, "atom-one-light.css"),
