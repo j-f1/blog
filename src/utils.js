@@ -1,5 +1,7 @@
 const safe = Symbol("safe");
 
+exports.isoDate = (date) => date.toISOString().split("T")[0];
+
 exports.safe = (str) => ({ [safe]: str, toString: () => str });
 
 exports.html = (strings, ...interpolations) => {

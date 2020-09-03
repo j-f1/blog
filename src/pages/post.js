@@ -1,5 +1,5 @@
 const layout = require("../layout");
-const { html, safe } = require("../utils");
+const { html, safe, isoDate } = require("../utils");
 
 module.exports = (post) =>
   layout(
@@ -9,7 +9,11 @@ module.exports = (post) =>
         <a href="/" class="home-link"> &larr; Home </a>
       </p>
       <h1 class="post-title">${post.title}</h1>
-      <p class="post-date">${post.date.toDateString()}</p>
+      <p class="post-date">
+        <time datetime="${isoDate(post.date)}">
+          ${post.date.toDateString()}
+        </time>
+      </p>
       <article>${safe(post.content_html)}</article>
       <br />
       <p style="font-style: italic">
