@@ -6,6 +6,7 @@ ul.posts {
 
 ul.posts li {
   padding: 1em 0;
+  line-height: 1;
 }
 
 ul.posts li:not(:first-child) {
