@@ -1,5 +1,5 @@
 const layout = require("../layout");
-const { html, isoDate } = require("../utils");
+const { html, isoDate, feedExplainer } = require("../utils");
 
 module.exports = (posts) =>
   layout(
@@ -11,6 +11,7 @@ module.exports = (posts) =>
         Looking for my website? It’s over at
         <a href="https://jedfox.com">jedfox.com</a>.
       </p>
+      <p style="font-family: var(--system)">${feedExplainer}</p>
 
       <ul class="posts">
         ${posts.map(renderPost)}

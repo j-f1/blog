@@ -1,5 +1,5 @@
 const layout = require("../layout");
-const { html, safe, isoDate } = require("../utils");
+const { html, safe, isoDate, feedExplainer } = require("../utils");
 
 module.exports = (post) =>
   layout(
@@ -30,5 +30,6 @@ module.exports = (post) =>
           >jed.twopointzero@gmail.com</a
         >, optionally using my <a href="/public.pgp">public key</a>.
       </p>
+      <p style="font-style: italic">${feedExplainer}</p>
     `
   );

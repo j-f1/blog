@@ -21,3 +21,11 @@ const unwrap = (raw) => {
 
 const encode = (s) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+
+exports.feedExplainer = exports.html`
+    Want to see future posts as soon as they’re published? Subscribe to
+    <a href="/feed.json">the JSON feed</a>! (<a href="https://aboutfeeds.com"
+      >what’s a feed?</a
+    >
+    • <a href="https://jsonfeed.org/version/1.1">what’s a JSON feed?</a>)
+  `;
