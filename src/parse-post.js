@@ -4,8 +4,10 @@ const slug = require("remark-slug");
 const highlight = require("remark-highlight.js");
 const headings = require("remark-autolink-headings");
 const flatMap = require("unist-util-flatmap");
+const remove = require("unist-util-remove");
 
 const md = remark()
+  // Ulysses-style paragraphs
   .use(function () {
     return (tree) => {
       flatMap(tree, (node, originalIndex, parent) => {
@@ -28,6 +30,15 @@ const md = remark()
         }
         return paragraphs;
       });
+    };
+  })
+  // Strip comments
+  .use(function () {
+    return (tree) => {
+      remove(
+        tree,
+        (node) => node.type === "html" && node.value.startsWith("<!--")
+      );
     };
   })
   .use(slug)
