@@ -1,4 +1,4 @@
-const { html, safe } = require("./utils");
+const { html } = require("./utils");
 
 module.exports = (title, content) => {
   return html`
@@ -49,7 +49,7 @@ module.exports = (title, content) => {
       </head>
       <body>
         <main>
-          ${safe(content)}
+          ${content}
           <footer>
             &copy;
             2020${new Date().getFullYear() > 2020
