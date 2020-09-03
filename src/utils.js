@@ -27,5 +27,5 @@ exports.feedExplainer = exports.html`
     <a href="/feed.json">the JSON feed</a>! (<a href="https://aboutfeeds.com"
       >what’s a feed?</a
     >
-    • <a href="https://jsonfeed.org/version/1.1">what’s a JSON feed?</a>)
+    • <a href="https://jsonfeed.org/version/1.1">what’s a JSON Feed?</a>)
   `;
