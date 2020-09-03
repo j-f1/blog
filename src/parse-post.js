@@ -65,7 +65,7 @@ module.exports = async (content) => {
   let meta;
   if (lines[1][0] === "{") {
     meta = {};
-    for (const [, token] of (lines[2] + " ").matchAll(metaRe)) {
+    for (const [, token] of (lines[1] + " ").matchAll(metaRe)) {
       if (token === "unlisted") {
         meta.unlisted = true;
       } else {
